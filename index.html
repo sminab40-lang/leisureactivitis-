@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leisure Activities - English Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:#5BC8F5;--sun:#FFD93D;--grass:#6BCB77;--coral:#FF6B6B;--purple:#A78BFA;
+    --card-bg:#FFFBF0;--shadow:0 8px 32px rgba(0,0,0,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#e0f7fa 0%,#fff9c4 50%,#f3e5f5 100%);min-height:100vh;padding:20px;overflow-x:hidden}
+  body::before{content:'';position:fixed;top:-80px;left:-80px;width:320px;height:320px;background:radial-gradient(circle,#FFD93D44,transparent 70%);border-radius:50%;z-index:0;animation:floatBg 8s ease-in-out infinite}
+  body::after{content:'';position:fixed;bottom:-80px;right:-80px;width:260px;height:260px;background:radial-gradient(circle,#A78BFA44,transparent 70%);border-radius:50%;z-index:0;animation:floatBg 10s ease-in-out infinite reverse}
+  @keyframes floatBg{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+  .container{max-width:920px;margin:0 auto;position:relative;z-index:1}
+
+  /* HEADER */
+  header{text-align:center;padding:30px 20px 10px;animation:slideDown .7s cubic-bezier(.22,1,.36,1) both}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:translateY(0)}}
+  header h1{font-family:'Fredoka One',cursive;font-size:clamp(2rem,6vw,3.5rem);color:#ff0404;text-shadow:3px 3px 0 #5BC8F5,6px 6px 0 #A78BFA;letter-spacing:2px;margin-bottom:6px}
+  header p{font-size:1.1rem;color:#6B7280;font-weight:600}
+
+  /* STUDENT INFO TOP */
+  .student-card{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:22px 28px;margin:20px 0 18px;border:3px solid #FFD93D;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;animation:slideDown .6s .1s cubic-bezier(.22,1,.36,1) both}
+  @media(max-width:600px){.student-card{grid-template-columns:1fr}}
+  .student-field label{display:block;font-weight:800;color:#92400E;font-size:.82rem;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+  .student-input{width:100%;border:2.5px solid #FFD93D;border-radius:12px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;color:#374151;outline:none;background:#FFFBF0;transition:border-color .2s,box-shadow .2s}
+  .student-input:focus{border-color:#FF9A3C;box-shadow:0 0 0 3px rgba(255,154,60,.2)}
+  .student-input.filled{background:#FFF9C4}
+
+  /* PROGRESS */
+  .progress-wrap{background:#fff;border-radius:50px;padding:12px 20px;margin:0 0 28px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;animation:fadeIn 1s .3s both}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .progress-label{font-weight:800;color:var(--purple);font-size:.95rem;white-space:nowrap}
+  .progress-bar-bg{flex:1;height:16px;background:#EDE9FE;border-radius:50px;overflow:hidden}
+  .progress-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#A78BFA,#5BC8F5);border-radius:50px;transition:width .7s cubic-bezier(.22,1,.36,1)}
+  .progress-pct{font-weight:800;color:#A78BFA;min-width:40px;text-align:right}
+
+  /* ACTIVITY CARDS */
+  .activity-card{background:var(--card-bg);border-radius:28px;box-shadow:var(--shadow);padding:32px 28px;margin-bottom:32px;border:3px solid transparent;opacity:0;transform:translateY(40px) scale(.97);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1),border .3s}
+  .activity-card.visible{opacity:1;transform:translateY(0) scale(1)}
+  .activity-card:hover{border-color:var(--sky)}
+  .activity-header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .activity-badge{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.3rem;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .badge-1{background:linear-gradient(135deg,#5BC8F5,#A78BFA)}.badge-2{background:linear-gradient(135deg,#FFD93D,#FF6B6B)}.badge-3{background:linear-gradient(135deg,#6BCB77,#5BC8F5)}.badge-4{background:linear-gradient(135deg,#FF6B6B,#A78BFA)}
+  .activity-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:#374151}
+  .activity-title span{color:var(--coral)}
+
+  /* MIND MAP */
+  .mindmap-container{background:linear-gradient(135deg,#f0fdf4,#f0f9ff);border-radius:22px;padding:10px;position:relative}
+  .mindmap-svg-wrap{position:relative;width:100%;padding-bottom:60%;min-height:300px}
+  #mmCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .mm-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#34D399,#059669);border-radius:50px;padding:14px 36px;font-family:'Fredoka One',cursive;font-size:1.5rem;color:#fff;letter-spacing:1px;box-shadow:0 8px 32px rgba(5,150,105,.45);z-index:10;white-space:nowrap;animation:mmPulse 3s ease-in-out infinite}
+  @keyframes mmPulse{0%,100%{box-shadow:0 8px 32px rgba(5,150,105,.45)}50%{box-shadow:0 8px 52px rgba(5,150,105,.7)}}
+  .mm-node{position:absolute;transform:translate(-50%,-50%);z-index:10}
+  .mm-input{background:#fff;border-radius:50px;padding:9px 20px;font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:700;color:#374151;text-align:center;outline:none;cursor:text;white-space:nowrap;min-width:120px;transition:box-shadow .2s,transform .15s}
+  .mm-input:focus{transform:scale(1.08)}
+  .mm-input.filled{font-weight:800}
+
+  /* ACTIVITY 2 */
+  .pictures-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:600px){.pictures-grid{grid-template-columns:repeat(2,1fr)}}
+  .picture-item{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);border:3px solid #EDE9FE;transition:transform .2s,border-color .2s;text-align:center}
+  .picture-item:hover{transform:scale(1.04);border-color:#A78BFA}
+  .picture-placeholder{width:100%;height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.8rem;background:linear-gradient(135deg,#EDE9FE,#BFDBFE);user-select:none}
+  .picture-placeholder small{font-size:.65rem;color:#9CA3AF;font-weight:700;margin-top:4px;text-align:center;padding:0 4px}
+  .picture-img{width:100%;height:140px;object-fit:cover;display:block}
+  .picture-input-wrap{padding:10px 12px 14px}
+  .picture-input{width:100%;border:2.5px dashed #A78BFA;border-radius:12px;padding:7px 10px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;color:#374151;text-align:center;outline:none;transition:all .2s}
+  .picture-input:focus{border-color:#5BC8F5;box-shadow:0 0 0 3px rgba(91,200,245,.2)}
+  .picture-input.correct{border-color:#6BCB77;background:#F0FFF4;border-style:solid}
+  .picture-input.wrong{border-color:#FF6B6B;background:#FFF0F0;border-style:solid}
+  .feedback-icon{font-size:.85rem;font-weight:800;margin-top:4px;height:16px}
+
+  /* ACTIVITY 3 */
+  .audio-section{background:linear-gradient(135deg,#EFF6FF,#F5F3FF);border-radius:20px;padding:24px;margin-bottom:20px}
+  .audio-note{display:inline-block;background:#FFF3CD;border:2px solid #FFD93D;border-radius:12px;padding:8px 16px;font-size:.85rem;font-weight:700;color:#92400E;margin-bottom:16px}
+  .audio-player-wrap{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+  audio{border-radius:40px;width:100%;max-width:420px}
+  .audio-url-hint{font-size:.78rem;color:#9CA3AF;font-weight:700}
+  .audio-answers{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .audio-answer-item{display:flex;flex-direction:column;gap:6px}
+  .audio-answer-label{font-weight:800;color:#6B7280;font-size:.82rem}
+  .audio-answer-input{border:2.5px dashed #6BCB77;border-radius:12px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;color:#374151;outline:none;background:#fff;transition:all .2s}
+  .audio-answer-input:focus{border-color:#5BC8F5;border-style:solid;box-shadow:0 0 0 3px rgba(91,200,245,.2)}
+  .audio-answer-input.filled{border-style:solid;border-color:#6BCB77;background:#F0FFF4}
+
+  /* ACTIVITY 4 */
+  .dialogue-wrap{background:linear-gradient(135deg,#FFF9F0,#F5F3FF);border-radius:20px;padding:24px}
+  .dialogue-line{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+  .speaker-badge{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1rem;flex-shrink:0;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+  .speaker-a{background:linear-gradient(135deg,#FF6B6B,#FF9A3C)}.speaker-b{background:linear-gradient(135deg,#5BC8F5,#A78BFA)}
+  .dialogue-text{flex:1;font-size:1.05rem;font-weight:700;color:#374151;line-height:1.8;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .dialogue-input{border:none;border-bottom:3px dashed #A78BFA;background:transparent;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:#6366F1;padding:2px 6px;outline:none;min-width:200px;transition:border-color .2s}
+  .dialogue-input:focus{border-bottom-color:#5BC8F5}
+  .dialogue-input.filled{border-bottom-style:solid;border-bottom-color:#6BCB77}
+
+  /* SUBMIT + SCORE */
+  .submit-wrap{text-align:center;margin-top:10px}
+  .submit-btn{background:linear-gradient(135deg,#FF6B6B,#FF9A3C);color:#fff;font-family:'Fredoka One',cursive;font-size:1.25rem;border:none;border-radius:50px;padding:16px 52px;cursor:pointer;box-shadow:0 6px 20px rgba(255,107,107,.4);transition:transform .15s,box-shadow .15s;letter-spacing:1px}
+  .submit-btn:hover{transform:scale(1.05);box-shadow:0 8px 28px rgba(255,107,107,.5)}
+  .submit-btn:active{transform:scale(.97)}
+  .score-banner{display:none;text-align:center;padding:28px 20px;background:linear-gradient(135deg,#6BCB77,#5BC8F5);border-radius:24px;margin-top:24px;margin-bottom:40px;box-shadow:var(--shadow);animation:popIn .5s cubic-bezier(.22,1,.36,1) both}
+  @keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+  .score-banner h2{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.12);margin-bottom:8px}
+  .score-banner p{color:#fff;font-weight:700;font-size:1.1rem}
+  .star-rating{display:flex;gap:6px;justify-content:center;margin-top:14px}
+  .star{font-size:2rem}.star.lit{animation:starPop .4s cubic-bezier(.22,1,.36,1) both}
+  @keyframes starPop{from{transform:scale(0)}to{transform:scale(1)}}
+  #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+  .word-bank{background:#FFF9C4;border-radius:14px;padding:12px 18px;margin-bottom:18px;font-weight:700;color:#92400E;font-size:.92rem}
+  .sheets-info{background:#fff;border-radius:20px;padding:16px 22px;margin-bottom:28px;border:2px solid #6BCB77;display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;box-shadow:0 4px 14px rgba(107,203,119,.15);font-size:.88rem;color:#374151}
+  .sheets-info code{background:#F3F4F6;border-radius:6px;padding:2px 7px;font-size:.8rem;color:#7C3AED;word-break:break-all}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div class="container">
+
+  <header>
+    <h1>🌴 Leisure Activities</h1>
+    <p>Complete all activities and earn your stars! ⭐</p>
+  </header>
+
+  <!-- ═══ STUDENT INFO AT TOP ═══ -->
+  <div class="student-card" id="studentCard">
+    <div class="student-field">
+      <label>👤 Full Name</label>
+      <input id="studentName" class="student-input" type="text" placeholder="Your name…" oninput="markStudentField(this)">
+    </div>
+    <div class="student-field">
+      <label>🏫 Class</label>
+      <input id="studentClass" class="student-input" type="text" placeholder="e.g. 3B…" oninput="markStudentField(this)">
+    </div>
+    <div class="student-field">
+      <label>📅 Date</label>
+      <input id="studentDate" class="student-input" type="date" oninput="markStudentField(this)">
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <span class="progress-label">📊 Progress</span>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+
+ 
+
+  <!-- ═══ ACTIVITY 1 — MIND MAP ═══ -->
+  <div class="activity-card" id="card1">
+    <div class="activity-header">
+      <div class="activity-badge badge-1">1</div>
+      <div class="activity-title"><span>Activity 1:</span> Complete the Mind Map with Leisure-Related Words</div>
+    </div>
+
+    <div class="mindmap-container">
+      <div class="mindmap-svg-wrap" id="mmWrap">
+        <svg id="mmCanvas" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="mm-center" id="mmCenter">🌿 Leisure</div>
+        <div class="mm-node" id="mmNode0"><input class="mm-input" data-mm="1" type="text" placeholder="free time" oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode1"><input class="mm-input" data-mm="2" type="text" placeholder="........" oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode2"><input class="mm-input" data-mm="3" type="text" placeholder="........" oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode3"><input class="mm-input" data-mm="4" type="text" placeholder="........"oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode4"><input class="mm-input" data-mm="5" type="text" placeholder="........"oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode5"><input class="mm-input" data-mm="6" type="text" placeholder="........"oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode6"><input class="mm-input" data-mm="7" type="text" placeholder="........" oninput="updateMindmap(this)"></div>
+        <div class="mm-node" id="mmNode7"><input class="mm-input" data-mm="8" type="text" placeholder="........"oninput="updateMindmap(this)"></div>
+      </div>
+    </div>
+  </div>
+
+ 
+<!-- ═══ ACTIVITY 2 — PICTURES ═══ -->
+<div class="activity-card" id="card2">
+  <div class="activity-header">
+    <div class="activity-badge badge-2">2</div>
+    <div class="activity-title">
+      <span>Activity 2:</span> Write the Word Under the Correct Picture
+    </div>
+  </div>
+
+ 
+
+  <div class="pictures-grid">
+    <!-- 🖼️ PICTURE 1 -->
+    <div class="picture-item" data-answer="swimming">
+      <div class="picture-placeholder">
+        <img src="images/1.jpg" class="picture-img" alt="swimming">
+      </div>
+      <div class="picture-input-wrap">
+        <input class="picture-input" type="text" placeholder="Write the word…" oninput="checkPicture(this)">
+        <div class="feedback-icon" id="fb1"></div>
+      </div>
+    </div>
+
+    <!-- 🖼️ PICTURE 2 -->
+    <div class="picture-item" data-answer="reading">
+      <div class="picture-placeholder">
+        <img src="images/2.jpg" class="picture-img" alt="reading">
+      </div>
+      <div class="picture-input-wrap">
+        <input class="picture-input" type="text" placeholder="Write the word…" oninput="checkPicture(this)">
+        <div class="feedback-icon" id="fb2"></div>
+      </div>
+    </div>
+
+    <!-- 🖼️ PICTURE 3 -->
+    <div class="picture-item" data-answer="cycling">
+      <div class="picture-placeholder">
+        <img src="images/3.jpg" class="picture-img" alt="cycling">
+      </div>
+      <div class="picture-input-wrap">
+        <input class="picture-input" type="text" placeholder="Write the word…" oninput="checkPicture(this)">
+        <div class="feedback-icon" id="fb3"></div>
+      </div>
+    </div>
+
+    <!-- 🖼️ PICTURE 4 -->
+    <div class="picture-item" data-answer="painting">
+      <div class="picture-placeholder">
+        <img src="images/4.jpg" class="picture-img" alt="painting">
+      </div>
+      <div class="picture-input-wrap">
+        <input class="picture-input" type="text" placeholder="Write the word…" oninput="checkPicture(this)">
+        <div class="feedback-icon" id="fb4"></div>
+      </div>
+    </div>
+
+    <!-- 🖼️ PICTURE 5 -->
+    <div class="picture-item" data-answer="gardening">
+      <div class="picture-placeholder">
+        <img src="images/5.jpg" class="picture-img" alt="gardening">
+      </div>
+      <div class="picture-input-wrap">
+        <input class="picture-input" type="text" placeholder="Write the word…" oninput="checkPicture(this)">
+        <div class="feedback-icon" id="fb5"></div>
+      </div>
+    </div>
+
+    <!-- 🖼️ PICTURE 6 -->
+    <div class="picture-item" data-answer="dancing">
+      <div class="picture-placeholder">
+        <img src="images/6.jpg" class="picture-img" alt="dancing">
+      </div>
+      <div class="picture-input-wrap">
+        <input class="picture-input" type="text" placeholder="Write the word…" oninput="checkPicture(this)">
+        <div class="feedback-icon" id="fb6"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ═══ ACTIVITY 3 — AUDIO ═══ -->
+  <div class="activity-card" id="card3">
+    <div class="activity-header">
+      <div class="activity-badge badge-3">3</div>
+      <div class="activity-title"><span>Activity 3:</span> Listen and Write the Leisure Words You Hear</div>
+    </div>
+    <div class="audio-section">
+      <div class="audio-note">🎧 Listen carefully, then write the 5 leisure words you hear!</div>
+      <div class="audio-player-wrap">
+        <!-- 🎵 REPLACE src with your audio URL (GitHub raw or Google Drive) -->
+        <audio controls>
+        <source src="audio/A.mp3" type="audio/mpeg">
+           Your browser does not support audio.
+        </audio>
+        <span class="audio-url-hint">&gt; </span>
+      </div>
+      <div class="audio-answers">
+        <div class="audio-answer-item"><span class="audio-answer-label">Word 1</span><input class="audio-answer-input" data-audio="1" type="text" placeholder="…" oninput="updateAudio(this)"></div>
+        <div class="audio-answer-item"><span class="audio-answer-label">Word 2</span><input class="audio-answer-input" data-audio="2" type="text" placeholder="…" oninput="updateAudio(this)"></div>
+        <div class="audio-answer-item"><span class="audio-answer-label">Word 3</span><input class="audio-answer-input" data-audio="3" type="text" placeholder="…" oninput="updateAudio(this)"></div>
+        <div class="audio-answer-item"><span class="audio-answer-label">Word 4</span><input class="audio-answer-input" data-audio="4" type="text" placeholder="…" oninput="updateAudio(this)"></div>
+        <div class="audio-answer-item"><span class="audio-answer-label">Word 5</span><input class="audio-answer-input" data-audio="5" type="text" placeholder="…" oninput="updateAudio(this)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ACTIVITY 4 — DIALOGUE ═══ -->
+  <div class="activity-card" id="card4">
+    <div class="activity-header">
+      <div class="activity-badge badge-4">4</div>
+      <div class="activity-title"><span>Activity 4:</span> Complete the Dialogue</div>
+    </div>
+    <div class="dialogue-wrap">
+      <div class="dialogue-line">
+        <div class="speaker-badge speaker-a">A</div>
+        <div class="dialogue-text">Where do you go in your free time?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="speaker-badge speaker-b">B</div>
+        <div class="dialogue-text">I <input class="dialogue-input" data-diag="1" type="text" placeholder="" oninput="updateDialogue(this)" style="min-width:240px"> .</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="speaker-badge speaker-a">A</div>
+        <div class="dialogue-text">What can you do there?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="speaker-badge speaker-b">B</div>
+        <div class="dialogue-text">You can <input class="dialogue-input" data-diag="2" type="text" placeholder="" oninput="updateDialogue(this)" style="min-width:210px"> .</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-wrap" style="margin-bottom:40px">
+    <button class="submit-btn" onclick="submitAll()">🎉 Submit My Answers!</button>
+  </div>
+
+  <div class="score-banner" id="scoreBanner">
+    <h2 id="scoreTitle"></h2>
+    <p id="scoreMsg"></p>
+    <div class="star-rating" id="starRating"></div>
+    <p style="margin-top:14px;font-size:.88rem;opacity:.9" id="sheetStatus"></p>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   GOOGLE SHEETS — Apps Script (paste in your project):
+
+   function doPost(e) {
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     var d = JSON.parse(e.postData.contents);
+     sheet.appendRow([new Date(),d.name,d.class,d.date,
+       d.mm1,d.mm2,d.mm3,d.mm4,d.mm5,d.mm6,d.mm7,d.mm8,
+       d.pic1,d.pic2,d.pic3,d.pic4,d.pic5,d.pic6,
+       d.audio1,d.audio2,d.audio3,d.audio4,d.audio5,
+       d.diag1,d.diag2]);
+     return ContentService.createTextOutput("OK");
+   }
+   Deploy → Web App → Execute as: Me → Access: Anyone
+   ============================================================ */
+const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+/* ── MIND MAP ──────────────────────────────────────────────── */
+const NODE_COLORS=[
+  {ray:'#6EE7B7',border:'#34D399'},{ray:'#93C5FD',border:'#60A5FA'},
+  {ray:'#FCA5A5',border:'#F87171'},{ray:'#FCD34D',border:'#FBBF24'},
+  {ray:'#C4B5FD',border:'#A78BFA'},{ray:'#FDB38B',border:'#FB923C'},
+  {ray:'#86EFAC',border:'#4ADE80'},{ray:'#F9A8D4',border:'#F472B6'}
+];
+// 8 angles: upper-left fan (3), top-centre, upper-right fan (3), bottom-centre
+// matching the reference image layout
+const ANGLES=[-130,-100,-60,-20,20,60,100,90+90];
+const DIST=[210,200,215,225,225,215,200,195];
+
+function buildMindMap(){
+  const wrap=document.getElementById('mmWrap');
+  const svg=document.getElementById('mmCanvas');
+  svg.innerHTML='';
+
+  const cx=400,cy=240;
+
+  // defs gradients
+  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  ANGLES.forEach((a,i)=>{
+    const g=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
+    g.setAttribute('id','rg'+i);g.setAttribute('gradientUnits','userSpaceOnUse');
+    const rad=a*Math.PI/180;
+    const nx=cx+DIST[i]*Math.cos(rad),ny=cy+DIST[i]*Math.sin(rad);
+    g.setAttribute('x1',cx);g.setAttribute('y1',cy);g.setAttribute('x2',nx);g.setAttribute('y2',ny);
+    const s1=document.createElementNS('http://www.w3.org/2000/svg','stop');
+    s1.setAttribute('offset','0%');s1.setAttribute('stop-color',NODE_COLORS[i].ray);s1.setAttribute('stop-opacity','1');
+    const s2=document.createElementNS('http://www.w3.org/2000/svg','stop');
+    s2.setAttribute('offset','100%');s2.setAttribute('stop-color',NODE_COLORS[i].ray);s2.setAttribute('stop-opacity','0.4');
+    g.appendChild(s1);g.appendChild(s2);defs.appendChild(g);
+  });
+  svg.appendChild(defs);
+
+  ANGLES.forEach((a,i)=>{
+    const rad=a*Math.PI/180;
+    const nx=cx+DIST[i]*Math.cos(rad),ny=cy+DIST[i]*Math.sin(rad);
+    const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1',cx);ln.setAttribute('y1',cy);ln.setAttribute('x2',nx);ln.setAttribute('y2',ny);
+    ln.setAttribute('stroke','url(#rg'+i+')');ln.setAttribute('stroke-width','30');ln.setAttribute('stroke-linecap','round');
+    svg.appendChild(ln);
+  });
+
+  ANGLES.forEach((a,i)=>{
+    const rad=a*Math.PI/180;
+    const nx=cx+DIST[i]*Math.cos(rad),ny=cy+DIST[i]*Math.sin(rad);
+    const px=(nx/800)*100,py=(ny/480)*100;
+    const node=document.getElementById('mmNode'+i);
+    const input=node.querySelector('.mm-input');
+    node.style.left=px+'%';node.style.top=py+'%';
+    input.style.border='2.5px solid '+NODE_COLORS[i].border;
+    input.style.boxShadow='0 4px 18px '+NODE_COLORS[i].ray+'BB';
+  });
+}
+
+/* ── PROGRESS ── */
+const TOTAL=3+8+6+5+2;
+const filled=new Set();
+function updateProgress(){
+  const pct=Math.round((filled.size/TOTAL)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'%';
+}
+
+function markStudentField(input){
+  if(input.value.trim()){input.classList.add('filled');filled.add(input.id);}
+  else{input.classList.remove('filled');filled.delete(input.id);}
+  updateProgress();
+}
+function updateMindmap(input){
+  const k='mm'+input.dataset.mm;
+  if(input.value.trim()){input.classList.add('filled');filled.add(k);}
+  else{input.classList.remove('filled');filled.delete(k);}
+  updateProgress();
+}
+function checkPicture(input){
+  const item=input.closest('.picture-item');
+  const answer=item.dataset.answer.toLowerCase().trim();
+  const val=input.value.toLowerCase().trim();
+  const idx=[...document.querySelectorAll('.picture-input')].indexOf(input)+1;
+  const fb=document.getElementById('fb'+idx);
+  if(val){
+    filled.add('pic'+idx);
+    if(val===answer){input.classList.add('correct');input.classList.remove('wrong');if(fb)fb.textContent='✅ Correct!';}
+    else if(val.length>=answer.length){input.classList.add('wrong');input.classList.remove('correct');if(fb)fb.textContent='❌ Try again';}
+    else{input.classList.remove('correct','wrong');if(fb)fb.textContent='';}
+  }else{filled.delete('pic'+idx);input.classList.remove('correct','wrong');if(fb)fb.textContent='';}
+  updateProgress();
+}
+function updateAudio(input){
+  const k='audio'+input.dataset.audio;
+  if(input.value.trim()){input.classList.add('filled');filled.add(k);}
+  else{input.classList.remove('filled');filled.delete(k);}
+  updateProgress();
+}
+function updateDialogue(input){
+  const k='diag'+input.dataset.diag;
+  if(input.value.trim()){input.classList.add('filled');filled.add(k);}
+  else{input.classList.remove('filled');filled.delete(k);}
+  updateProgress();
+}
+
+function collectAnswers(){
+  const d={};
+  d.name=document.getElementById('studentName').value.trim()||'Anonymous';
+  d.class=document.getElementById('studentClass').value.trim();
+  d.date=document.getElementById('studentDate').value;
+  document.querySelectorAll('.mm-input').forEach(i=>d['mm'+i.dataset.mm]=i.value);
+  document.querySelectorAll('.picture-input').forEach((i,n)=>d['pic'+(n+1)]=i.value);
+  document.querySelectorAll('.audio-answer-input').forEach(i=>d['audio'+i.dataset.audio]=i.value);
+  document.querySelectorAll('.dialogue-input').forEach(i=>d['diag'+i.dataset.diag]=i.value);
+  return d;
+}
+
+async function submitAll(){
+  const data=collectAnswers();
+  const pct=Math.round((filled.size/TOTAL)*100);
+  const banner=document.getElementById('scoreBanner');
+  banner.style.display='block';
+  banner.scrollIntoView({behavior:'smooth',block:'center'});
+  let title,msg;
+  if(pct===100){title="🌟 Perfect Score!";msg="Amazing! You completed everything!";}
+  else if(pct>=70){title="🎉 Great Work!";msg=`You completed ${pct}%. Well done!`;}
+  else if(pct>=40){title="👍 Good Start!";msg=`You completed ${pct}%. Keep going!`;}
+  else{title="📝 Keep Trying!";msg=`You completed ${pct}%. You can do it!`;}
+  document.getElementById('scoreTitle').textContent=title;
+  document.getElementById('scoreMsg').textContent=msg;
+  const sw=document.getElementById('starRating');sw.innerHTML='';
+  const stars=Math.max(1,Math.ceil(pct/20));
+  for(let i=0;i<5;i++){const s=document.createElement('span');s.className='star'+(i<stars?' lit':'');s.textContent=i<stars?'⭐':'☆';s.style.animationDelay=(i*.12)+'s';sw.appendChild(s);}
+  if(pct>=70)launchConfetti();
+  const ss=document.getElementById('sheetStatus');
+  if(GOOGLE_SCRIPT_URL!=="YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE"){
+    try{await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});ss.textContent='✅ Answers saved to Google Sheets!';}
+    catch(e){ss.textContent='⚠️ Could not save. Check your Script URL.';}
+  }else{ss.textContent='💡 Teacher: paste your Apps Script URL to enable saving.';}
+}
+
+function launchConfetti(){
+  const canvas=document.getElementById('confetti-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const colors=['#FF6B6B','#FFD93D','#6BCB77','#5BC8F5','#A78BFA','#FF9A3C','#fff'];
+  const pieces=Array.from({length:200},()=>({x:Math.random()*canvas.width,y:Math.random()*-canvas.height,r:Math.random()*11+4,d:Math.random()*3.5+1,color:colors[Math.floor(Math.random()*colors.length)],tilt:Math.random()*20-10,rotation:Math.random()*Math.PI*2,shape:Math.random()>.5?'circle':'rect'}));
+  let frame=0;
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rotation);ctx.fillStyle=p.color;if(p.shape==='circle'){ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill();}else{ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);}ctx.restore();p.y+=p.d;p.rotation+=.04;p.x+=Math.sin(frame*.018+p.tilt)*1.6;});frame++;if(frame<350)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);}
+  draw();
+}
+
+window.addEventListener('load',()=>{
+  buildMindMap();
+  window.addEventListener('resize',buildMindMap);
+  const d=document.getElementById('studentDate');
+  if(d)d.value=new Date().toISOString().split('T')[0];
+  document.querySelectorAll('.activity-card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*180));
+});
+</script>
+</body>
+</html>
